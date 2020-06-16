@@ -1,0 +1,5 @@
+1   Get the key
+2   Calculate the difference between the key and the alphabet for each char
+2a  Store number 2 in an array
+3   Get the plain text
+4   Add the difference from number 2 for each char of the plain text

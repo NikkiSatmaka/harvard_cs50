@@ -1,0 +1,8 @@
+1   Ask for user input for a number
+2   Take the last number
+3   Store the last number
+4   Remove the last number
+5   If number is empty
+6       Continue
+7   Else
+8       Go back to line 2

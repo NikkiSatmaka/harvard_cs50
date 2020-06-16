@@ -1,0 +1,5 @@
+1   Ask for user input for height
+2   If height is less then 1 or more than 8
+3       Go back to line 1
+4   Draw gaps according to height - 1
+5   Draw bricks according to height

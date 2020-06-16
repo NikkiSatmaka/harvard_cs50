@@ -1,0 +1,8 @@
+1   Get key
+2   Validate the key that is a positive integer
+3   Get the plain text
+4   Iterate every char in plain text
+5       If the char is an alphabet
+5a          Cipher it using the key
+5b      Else
+5c          Plain text stays the same
