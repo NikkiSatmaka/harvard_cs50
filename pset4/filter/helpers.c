@@ -41,7 +41,8 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    RGBTRIPLE tmpImage[height][width];
+    RGBTRIPLE tmp[height][width];
+
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -126,9 +127,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             int avgGreen = round(green / (float) count);
             int avgRed = round(red / (float) count);
 
-            tmpImage[i][j].rgbtBlue = avgBlue;
-            tmpImage[i][j].rgbtGreen = avgGreen;
-            tmpImage[i][j].rgbtRed = avgRed;
+            tmp[i][j].rgbtBlue = avgBlue;
+            tmp[i][j].rgbtGreen = avgGreen;
+            tmp[i][j].rgbtRed = avgRed;
         }
     }
 
@@ -136,9 +137,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int j = 0; j < width; j++)
         {
-            image[i][j].rgbtBlue = tmpImage[i][j].rgbtBlue;
-            image[i][j].rgbtGreen = tmpImage[i][j].rgbtGreen;
-            image[i][j].rgbtRed = tmpImage[i][j].rgbtRed;
+            image[i][j].rgbtBlue = tmp[i][j].rgbtBlue;
+            image[i][j].rgbtGreen = tmp[i][j].rgbtGreen;
+            image[i][j].rgbtRed = tmp[i][j].rgbtRed;
         }
     }
     return;
@@ -147,5 +148,32 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
+    RGBTRIPLE tmp[height][width];
+
+    int gx[3][3] =
+        {
+            {-1, 0, 1},
+            {-2, 0, 2},
+            {-1, 0, 1}
+        };
+
+    int gy[3][3] =
+        {
+            {-1, -2, -1},
+            {0, 0, 0},
+            {1, 2, 1}
+        };
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+
+            blue += image[i][j].rgbtBlue;
+            green += image[i][j].rgbtGreen;
+            red += image[i][j].rgbtRed;
+
+        }
+    }
     return;
 }
