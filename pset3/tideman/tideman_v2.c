@@ -33,7 +33,6 @@ void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
-bool check_graph(int winner, int loser);
 
 int main(int argc, string argv[])
 {
@@ -177,16 +176,49 @@ void sort_pairs(void)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
+    for (int i = 0; i < pair_count; i++)
+    {
+        printf("Pair[%i]: Winner = %s, Loser = %s\n", i, candidates[pairs[i].winner], candidates[pairs[i].loser]);
+    }
     // Iterate each pairs
     for (int i = 0; i < pair_count; i++)
     {
-        bool cycle = check_graph(pairs[i].winner, pairs[i].loser);
+        bool cycle = false;
+        int j = 0;
+        int count = 0;
+        int winner = pairs[i].winner;
+        int loser = pairs[i].loser;
 
-        if (cycle == true)
+        while (j < candidate_count)
         {
-            printf("Did not lock %s -> %s\n", candidates[pairs[i].winner], candidates[pairs[i].loser]);
-
+            if (locked[loser][j] == true)
+            {
+                if (j == pairs[i].winner)
+                {
+                    cycle = true;
+                    printf("Did not lock %s -> %s\n", candidates[pairs[i].winner], candidates[pairs[i].loser]);
+                    break;
+                }
+                else
+                {
+                    loser = j;
+                    j = 0;
+                }
+            }
+            else
+            {
+                if (count == candidate_count)
+                {
+                    j++;
+                    count = 0;
+                }
+                else
+                {
+                    count++;
+                }
+            }
         }
+
         if (cycle == false)
         {
             locked[pairs[i].winner][pairs[i].loser] = true;
@@ -196,31 +228,23 @@ void lock_pairs(void)
     return;
 }
 
-bool check_graph(int winner, int loser)
-{
-    if (loser == winner)
-    {
-        return true;
-    }
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (locked[loser][i] == true)
-        {
-            if (check_graph(loser, i) == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-}
+/* bool check_graph(int winner, int loser) */
+/* { */
+/*     for (int i = 0; i < candidate_count; i++) */
+/*     { */
+/*         if (locked[loser][i] == true) */
+/*         { */
+/*             if (i == winner) */
+/*             { */
+/*                 return true; */
+/*             } */
+/*             else */
+/*             { */
+/*                 check_graph(loser, i); */
+/*             } */
+/*         } */
+/*     } */
+/* } */
 
 // Print the winner of the election
 void print_winner(void)
